@@ -1,6 +1,5 @@
 .DS_Store
 *.pyc
-/sample/**
 out
 sample_test
 ~*

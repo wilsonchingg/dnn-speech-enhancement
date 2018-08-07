@@ -1,0 +1,5 @@
+{
+  "sampling_rate": 16000,
+  "winlen": 0.02,
+  "winstep": 0.01
+}

@@ -22,11 +22,3 @@ print(model.summary())
 model.fit_generator(generator=training_generator(i, left_pad=pad_l, right_pad=pad_r), epochs=epochs, verbose=2,
 callbacks=get_callbacks('b_' + setting + '_' + str(i), early_stop = 15),
 steps_per_epoch=((i+1) * 3000), validation_data = (v_x, v_y), shuffle=True, initial_epoch = 0)
-
-# single_bidirectional_network
-setting = 'mse_r'
-model = get_residual_model()
-print(model.summary())
-model.fit_generator(generator=training_generator(i, left_pad=pad_l, right_pad=pad_r), epochs=epochs, verbose=2,
-callbacks=get_callbacks('b_' + setting + '_' + str(i), early_stop = 15),
-steps_per_epoch=((i+1) * 3000), validation_data = (v_x, v_y), shuffle=True)

@@ -1,8 +1,6 @@
 import os
 import sys
-
 abs_dir = os.path.dirname(os.path.realpath(__file__))
-sys.path.append(abs_dir + "/mfcc")
 
 import numpy as np
 from mfcc_util import get_mfcc_batch
