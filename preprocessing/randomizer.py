@@ -1,15 +1,5 @@
-import sys
-import wave
-import os, random
-import numpy as np
-import json
-import audio_utils
-
-from random import randint
-
+import sys, os, random, json, audio_utils, scipy.fftpack as fft
 from scipy.io.wavfile import read
-import scipy.fftpack as fft
-
 
 conf_path = os.path.join(os.path.dirname(__file__), '../config.json')
 dataset_path = os.path.join(os.path.dirname(__file__), '../datasets')
@@ -23,7 +13,10 @@ except:
     sys.exit("preprocessing/randomizer.py: Unable to read the config file")
 
 def random_file(dir):
-	return random.choice(os.listdir(dir))
+	name = random.choice(os.listdir(dir))
+	if name.endswith('.wav'):
+		return name
+	return random_file(dir)
 
 def listdirs(dir):
 	return [d for d in os.listdir(dir) if os.path.isdir(os.path.join(dir, d))]
@@ -38,9 +31,9 @@ def random_noises(_set):
 	_path = os.path.join(_path, random.choice(listdirs(_path)))
 	return os.path.join(_path, random_file(_path))
 
-def get_noisy_speech(_set = 'dev', cat_dir=None):
+def get_noisy_speech(_set = 'dev'):
 	noise_files = []
-	r_file = random_speeches(_set = _set)
+	speech_file = random_speeches(_set = _set)
 	for _ in range(0, noise_mix):
 		noise_files.append(random_noises(_set))
-	return audio_utils.overlay(arr = noise_files, hm=r_file)
+	return audio_utils.overlay(speech_file, noise_files)

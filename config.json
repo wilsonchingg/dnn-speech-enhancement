@@ -1,5 +1,13 @@
 {
   "sampling_rate": 16000,
   "winlen": 0.02,
-  "winstep": 0.01
+  "winstep": 0.01,
+  "noise_mix": 2,
+  "generator": {
+    "dev_dataset_epochs": 1500,
+    "eval_dataset_epochs": 500,
+    "dev_dataset_batches": 6,
+    "eval_dataset_batches": 1,
+    "min_sample_len": 5
+  }
 }

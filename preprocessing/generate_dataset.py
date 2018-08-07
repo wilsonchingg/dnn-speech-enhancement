@@ -1,10 +1,5 @@
-import os
-import sys
-import json
-import numpy as np
-
-from pprint import pprint
-from mfcc_util import get_mfcc_batch
+import os, sys, json, numpy as np
+from randomizer import get_noisy_speech
 from mfcc_source import mfcc
 
 output_path = os.path.join(os.path.dirname(__file__), '../out')
@@ -26,7 +21,7 @@ except:
 
 def generate_batch(epoch, _set, filename, n_filt = 30, winfunc = np.hamming):
     def get_audio():
-        bg_batch, hm_batch = get_mfcc_batch(_set = _set)
+        bg_batch, hm_batch = get_noisy_speech(_set = _set)
         if len(bg_batch) < min_len:
             return get_audio()
         return bg_batch, hm_batch

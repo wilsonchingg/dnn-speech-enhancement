@@ -93,7 +93,7 @@ return_irm = False, _winfunc = lambda x:np.ones((x,))):
     else:
         return bg_mfcc, np.clip(np.sqrt((hm_mfcc_energy/bg_mfcc_energy)), 0, 1)
 
-def generate_sample(_n_filt = n_filt, _winlen = winlen, _winstep = winlen/2, return_irm = False, _generator = get_mfcc_batch,
+def generate_sample(_n_filt = n_filt, _winlen = winlen, _winstep = winlen/2, return_irm = False, _generator = randomizer.get_noisy_speech,
  _winfunc = lambda x:np.ones((x,))):
     bg_batch, hm_batch = _generator()
     return hm_batch, bg_batch, compute_feature(bg_batch, hm_batch, _n_filt = _n_filt, _winstep = _winstep,
