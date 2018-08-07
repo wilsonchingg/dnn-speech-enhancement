@@ -1,0 +1,9 @@
+.DS_Store
+*.pyc
+/sample/**
+out
+sample_test
+~*
+*.wav
+*pesq_results.txt
+*.npy
