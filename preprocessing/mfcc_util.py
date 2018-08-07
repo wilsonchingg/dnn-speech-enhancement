@@ -2,8 +2,7 @@ import os
 import sys
 abs_dir = os.path.dirname(os.path.realpath(__file__))
 
-sys.path.append(abs_dir + "/..")
-sys.path.append(abs_dir + "/../../postprocessing")
+sys.path.append(abs_dir + "/../postprocessing")
 
 import numpy as np
 
@@ -61,12 +60,12 @@ def get_estimate(_bg, _gains, _winlen = winlen, _winstep = winlen/2, _winfunc = 
     estimate_signal_frames = np.fft.irfft(mag_spec, nfft)
     return sigproc.deframesig(estimate_signal_frames, len(_bg), _winlen*sampling_rate, _winstep*sampling_rate, winfunc = _winfunc)
 
-def get_mfcc_batch(_set='eval', cat_dir = None):
-    bg_batch, hm_batch = randomizer.get_mfcc_batch(_set = _set, cat_dir=cat_dir)
+def get_mfcc_batch(_set='eval'):
+    bg_batch, hm_batch = randomizer.get_noisy_speech(_set = _set)
     if(len(hm_batch) > 0 and len(bg_batch) > 0):
         return bg_batch, hm_batch
     else:
-        return get_mfcc_batch(_set=_set, cat_dir=cat_dir)
+        return get_mfcc_batch(_set=_set)
 
 def get_delta(mfcc_features):
     d_bg_mfcc = delta(mfcc_features, 6)

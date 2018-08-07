@@ -8,9 +8,9 @@ from os.path import isfile, join
 
 from scipy.io.wavfile import read, write
 
-import setting
 
-setting.init()
+
+
 sample_dir = "../../sample/"
 
 
