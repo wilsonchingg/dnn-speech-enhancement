@@ -1,5 +1,5 @@
-# Disclaimer #
-For submission reason, the sample directory only contains a small subset of the audio files used for generating training and validation datasets
+# Refactoring #
+
 # Python Version #
 Python 2.6+ / Python 3.5+
 To run any scripts from the test/full_system_evaluation, Python 2.6+ must be required
