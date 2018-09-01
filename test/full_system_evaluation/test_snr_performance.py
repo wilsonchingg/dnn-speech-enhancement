@@ -10,6 +10,7 @@ sys.path.append(abs_dir + "/../../train/mfcc_sequence")
 from mfcc_util import generate_sample, get_estimate, write_wav, get_delta
 from mfcc_sequence_util import to_sequence_with_stride
 from postprocess_util import evaluate
+from log_mmse import run_logmmse
 from audio_utils import set_snr
 from predict import predict
 import subprocess
@@ -23,16 +24,11 @@ evaluation_size = 200
 
 multipliers = [[0.316, 10], [0.56, 5], [1, 0], [1.79, -5]]
 
-def run_logmmse():
-    args = ['python2.7', 'logmmse.py', '../../sample_test/mixed.wav', '../../sample_test/logmmse.wav']
-    pipe = subprocess.Popen(args, stdout=subprocess.PIPE)
-    _, _ = pipe.communicate()
-
 for j in multipliers:
     set_snr(j[0])
     for i in range(0, evaluation_size):
         hm, bg, mfcc_feature = generate_sample(_n_filt=30, _winlen=0.02, _winstep=0.01, _winfunc = np.hamming)
-        run_logmmse()
+        run_logmmse('../../sample_test/mixed.wav', '../../sample_test/logmmse.wav')
 
         sequence_feature = np.array(to_sequence_with_stride(mfcc_feature, left_pad = 5, right_pad = 5))
         delta_feature = get_delta(mfcc_feature)

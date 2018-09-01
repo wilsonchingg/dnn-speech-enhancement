@@ -10,6 +10,7 @@ from mfcc_util import generate_sample, get_estimate, write_wav, get_mfcc_batch
 from mfcc_sequence_util import to_sequence_with_stride
 from postprocess_util import evaluate
 from audio_utils import set_snr
+from log_mmse import run_logmmse
 from predict import predict
 import subprocess
 import setting
@@ -23,12 +24,6 @@ evaluation_size = 100
 
 multipliers = [[0.316, 10], [0.56, 5], [1, 0], [1.79, -5]]
 
-
-def run_logmmse():
-    args = ['python2.7', 'logmmse.py', '../../sample_test/mixed.wav', '../../sample_test/logmmse.wav']
-    pipe = subprocess.Popen(args, stdout=subprocess.PIPE)
-    _, _ = pipe.communicate()
-
 set_snr(0.56) # 0db
 
 for j in setting.sample_sub_dir:
@@ -37,7 +32,7 @@ for j in setting.sample_sub_dir:
             return get_mfcc_batch(cat_dir = j)
         hm, bg, mfcc_feature = generate_sample(_n_filt=30, _winlen=0.02, _winstep=0.01, _winfunc = np.hamming,
          _generator = get_noise_type)
-        run_logmmse()
+        run_logmmse('../../sample_test/mixed.wav', '../../sample_test/logmmse.wav')
         # Run GRU prediction
         sequence_feature = np.array(to_sequence_with_stride(mfcc_feature, left_pad = 5, right_pad = 5))
         prediction = predict(sequence_feature, filenames[0][0:-4])
