@@ -1,7 +1,7 @@
 import os, randomizer, json, numpy as np
 
 from python_speech_features import sigproc
-from mfcc_source import mfcc, delta, hz2mel, mel2hz
+from python_speech_features import mfcc, delta, hz2mel, mel2hz
 from audio_utils import write_wav
 
 CONF_PATH = os.path.join(os.path.dirname(__file__), '../config.json')
@@ -20,10 +20,31 @@ def getmelpoint(_n_filt=N_FILT):
 	melpoints = np.linspace(lowmel, highmel, _n_filt+1)
 	return mel2hz(melpoints)[1: _n_filt+1]
 
+# TODO: the counting process should operate on bin level instead
+def compute_gain(pspec, samplerate, nfilt, winlen, **kwargs):
+	print(nfilt)
+	print(winlen)
+	melpoints = getmelpoint()
+	scale = 1. / winlen # 8000hz
+	gains = []
+	for i in range(0, len(pspec)):
+		_gains = []
+		_signals = 0
+		_melpoints_idx = 0
+		for j in range(0, len(pspec[i])):
+			if melpoints[_melpoints_idx] < j * scale and _melpoints_idx != len(melpoints)-1:
+				_gains.append(_signals)
+				_signals = 0
+				_melpoints_idx += 1
+			_signals += pspec[i][j]
+		_gains.append(min(_signals, 1.0))
+		gains.append(_gains)
+	return np.array(gains)
+
 # gains, a 2d array of size (x, n_fil
 # TODO: the counting process should operate on bin level instead
 def apply_gain(pspec, gains):
-	if not gains: # unexpected error
+	if len(gains) == 0: # unexpected error
 		return []
 	melpoints = getmelpoint(len(gains[0]))
 	scale = 1. / WINLEN # 8000hz

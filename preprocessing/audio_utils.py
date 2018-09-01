@@ -19,7 +19,7 @@ def write_wav(dest, data):
 	write(os.path.join(os.path.dirname(__file__), '../out', dest), SAMPLING_RATE, to_write)
 
 def int_to_float(signals):
-	if not signals:
+	if len(signals) == 0:
 		return []
 	if isinstance(signals[0], (int, np.int16)):
 		arr = []

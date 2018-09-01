@@ -8,7 +8,7 @@ with open(CONF_PATH) as f:
 	NOISE_MIX = json.load(f)["noise_mix"] # Number of noise files to be mixed to a speech audio
 
 def random_file(_dir):
-	name = random.choice(os.listdir(dir))
+	name = random.choice(os.listdir(_dir))
 	if name.endswith('.wav'):
 		return name
 	return random_file(_dir)
