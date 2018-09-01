@@ -21,22 +21,20 @@ def getmelpoint(_n_filt=N_FILT):
 	return mel2hz(melpoints)[1: _n_filt+1]
 
 # TODO: the counting process should operate on bin level instead
-def compute_gain(pspec, samplerate, nfilt, winlen, **kwargs):
-	print(nfilt)
-	print(winlen)
+def compute_gain(pspec, winlen, **kwargs):
 	melpoints = getmelpoint()
 	scale = 1. / winlen # 8000hz
 	gains = []
-	for i in range(0, len(pspec)):
+	for _, val in enumerate(pspec):
 		_gains = []
 		_signals = 0
 		_melpoints_idx = 0
-		for j in range(0, len(pspec[i])):
+		for j, val2 in enumerate(val):
 			if melpoints[_melpoints_idx] < j * scale and _melpoints_idx != len(melpoints)-1:
 				_gains.append(_signals)
 				_signals = 0
 				_melpoints_idx += 1
-			_signals += pspec[i][j]
+			_signals += val2
 		_gains.append(min(_signals, 1.0))
 		gains.append(_gains)
 	return np.array(gains)
@@ -75,10 +73,10 @@ def compute_feature(bg_batch, hm_batch, _n_filt=N_FILT, _winlen=WINLEN, _winstep
  to_write=True, _winfunc=lambda x: np.ones((x,))):
 	nfft = int(SAMPLING_RATE * _winlen)
 	bg_mfcc, bg_mfcc_energy = mfcc(bg_batch, winlen=_winlen, winstep=_winstep,
-	 numcep=_n_filt, nfft=nfft, nfilt=_n_filt, preemph=0,
+	 numcep=_n_filt, nfft=nfft, nfilt=_n_filt, preemph=0, cb=compute_gain,
 	 ceplifter=0, appendEnergy=False, winfunc=_winfunc)
 	_, hm_mfcc_energy = mfcc(hm_batch, winlen=_winlen, winstep=_winstep,
-	 numcep=_n_filt, nfft=nfft, nfilt=_n_filt, preemph=0,
+	 numcep=_n_filt, nfft=nfft, nfilt=_n_filt, preemph=0, cb=compute_gain,
 	 ceplifter=0, appendEnergy=False, winfunc=_winfunc)
 	# Ideal Ratio Mask applied signal
 	estimate = get_estimate(bg_batch, np.clip(np.sqrt((hm_mfcc_energy/bg_mfcc_energy)), 0, 1),

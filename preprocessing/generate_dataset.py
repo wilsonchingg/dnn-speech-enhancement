@@ -37,7 +37,7 @@ def generate_batch(epoch, _set, filename, n_filt=30, winfunc=np.hamming):
                                         winfunc=winfunc)
 		_, hm_mfcc_energy = mfcc(hm_batch[0:MIN_LEN], winlen=WINLEN,
                                  winstep=WINSTEP, numcep=n_filt,
-                                 nfft=NFFT, nfilt=n_filt, preemph=0,cb=compute_gain,
+                                 nfft=NFFT, nfilt=n_filt, preemph=0, cb=compute_gain,
                                  ceplifter=0, appendEnergy=False, winfunc=winfunc)
 		input_param.extend(bg_mfcc)
 		output_param.extend(np.clip((hm_mfcc_energy/bg_mfcc_energy), 0, 1).tolist())
