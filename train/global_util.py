@@ -1,7 +1,7 @@
-from keras.callbacks import ModelCheckpoint, CSVLogger, EarlyStopping, TensorBoard
+from keras.callbacks import ModelCheckpoint, CSVLogger, EarlyStopping
 
-def get_callbacks(filename, early_stop = -1):
-	best_checkpointer = ModelCheckpoint(filepath= filename + '_best.hdf5',
+def get_callbacks(filename, early_stop=-1):
+	best_checkpointer = ModelCheckpoint(filepath=filename + '_best.hdf5',
 	verbose=2, save_best_only=True, period=1)
 	csv_logger = CSVLogger(filename + '.log', append=True)
 	cbs = [best_checkpointer, csv_logger]

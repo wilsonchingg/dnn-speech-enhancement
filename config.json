@@ -10,5 +10,15 @@
     "dev_dataset_batches": 6,
     "eval_dataset_batches": 1,
     "min_sample_len": 5
+  },
+  "train": {
+    "batch_size": 200,
+    "single_batch_step": 3000,
+    "frame_size": 11,
+    "input_size": 30,
+    "pad_l": 5,
+    "pad_r": 5,
+    "stride_width": 2,
+    "epochs": 251
   }
 }
