@@ -6,7 +6,7 @@ It is based on my university dissertation. Please send me an email if you would 
 # Python Version #
 Python 2.6+ / Python 3.5+
 
-To run any test script, Python 2.6+ must be required
+To run any test script, Python 2 is required (due to package dependency)
 
 # Installing dependencies #
 run the following command from the project root directory
