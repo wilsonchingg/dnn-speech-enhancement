@@ -16,7 +16,7 @@ def write_wav(dest, data):
 	for idx, val in enumerate(data):
 		to_write[idx] = int(val * 32767)
 	# TODO, might not work
-	write(os.path.join(os.path.dirname(__file__), '../out', dest), SAMPLING_RATE, to_write)
+	write(os.path.join(os.path.dirname(__file__), '../sample_test', dest), SAMPLING_RATE, to_write)
 
 def int_to_float(signals):
 	if len(signals) == 0:

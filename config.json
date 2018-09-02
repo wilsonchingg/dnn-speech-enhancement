@@ -20,5 +20,8 @@
     "pad_r": 5,
     "stride_width": 2,
     "epochs": 251
+  },
+  "eval": {
+    "epochs": 100
   }
 }

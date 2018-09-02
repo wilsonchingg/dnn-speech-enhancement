@@ -14,7 +14,7 @@ with open(os.path.join(os.path.dirname(__file__), '../config.json')) as f:
 	# python_speech_features would give 499 frame levels as a result (20ms window size, 10ms overlap).
 	# but note the framing algorithm of librosa would give a different number
 	NFFT = 499
-	NUM_OF_BATCHES = 3
+	NUM_OF_BATCHES = 2
 	set_frame_size(PAD_L + PAD_R + 1)
 
 _, _, v_x, v_y = get_dataset(NFFT, left_pad=PAD_L, right_pad=PAD_R, stride_width=STRIDE_WIDTH)

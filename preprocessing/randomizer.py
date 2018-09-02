@@ -5,7 +5,10 @@ DATASET_PATH = os.path.join(os.path.dirname(__file__), '../datasets')
 OUTPUT_PATH = os.path.join(os.path.dirname(__file__), '../out')
 
 with open(CONF_PATH) as f:
-	NOISE_MIX = json.load(f)["noise_mix"] # Number of noise files to be mixed to a speech audio
+	CONF = json.load(f)
+	NOISE_MIX = CONF["noise_mix"] # Number of noise files to be mixed to a speech audio
+	SAMPLING_RATE = CONF["sampling_rate"]
+	MIN_LEN = CONF["generator"]["min_sample_len"] * SAMPLING_RATE  # 5 seconds
 
 def random_file(_dir):
 	name = random.choice(os.listdir(_dir))
@@ -31,4 +34,7 @@ def get_noisy_speech(_set='dev'):
 	speech_file = random_speeches(_set=_set)
 	for _ in range(0, NOISE_MIX):
 		noise_files.append(random_noises(_set))
-	return audio_utils.overlay(speech_file, noise_files)
+	o_1, o_2 = audio_utils.overlay(speech_file, noise_files)
+	if len(o_1) < MIN_LEN:
+		return get_noisy_speech(_set=_set)
+	return o_1, o_2

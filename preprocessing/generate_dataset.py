@@ -20,16 +20,11 @@ with open(os.path.join(os.path.dirname(__file__), '../config.json')) as f:
 
 
 def generate_batch(epoch, _set, filename, n_filt=30, winfunc=np.hamming):
-	def get_audio():
-		bg_batch, hm_batch = get_noisy_speech(_set=_set)
-		if len(bg_batch) < MIN_LEN:
-			return get_audio()
-		return bg_batch, hm_batch
 	input_param = []
 	output_param = []
 	for j in range(0, epoch):
 		print(filename + ': '+ str(j + 1) + '/' + str(epoch))
-		bg_batch, hm_batch = get_audio()
+		bg_batch, hm_batch = get_noisy_speech(_set=_set)
 		bg_mfcc, bg_mfcc_energy = mfcc(bg_batch[0:MIN_LEN], winlen=WINLEN,
                                         winstep=WINSTEP, numcep=n_filt,
                                         nfft=NFFT, nfilt=n_filt, preemph=0,

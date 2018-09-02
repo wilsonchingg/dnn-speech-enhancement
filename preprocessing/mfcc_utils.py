@@ -70,7 +70,7 @@ def get_delta(mfcc_features):
 	return np.concatenate((mfcc_features, d_bg_mfcc, dd_bg_mfcc), axis=1)
 
 def compute_feature(bg_batch, hm_batch, _n_filt=N_FILT, _winlen=WINLEN, _winstep=WINLEN//2,
- to_write=True, _winfunc=lambda x: np.ones((x,))):
+ to_write=False, _winfunc=lambda x: np.ones((x,))):
 	nfft = int(SAMPLING_RATE * _winlen)
 	bg_mfcc, bg_mfcc_energy = mfcc(bg_batch, winlen=_winlen, winstep=_winstep,
 	 numcep=_n_filt, nfft=nfft, nfilt=_n_filt, preemph=0, cb=compute_gain,
@@ -81,14 +81,15 @@ def compute_feature(bg_batch, hm_batch, _n_filt=N_FILT, _winlen=WINLEN, _winstep
 	# Ideal Ratio Mask applied signal
 	estimate = get_estimate(bg_batch, np.clip(np.sqrt((hm_mfcc_energy/bg_mfcc_energy)), 0, 1),
 	 _winlen=_winlen, _winfunc=_winfunc, _winstep=_winstep)
-	if to_write == 0:
+	if to_write:
+		print('tes')
 		write_wav('mixed.wav', bg_batch.astype(np.float32))
 		write_wav('original.wav', hm_batch.astype(np.float32))
 		write_wav('ideal.wav', estimate.astype(np.float32))
 	return bg_mfcc
 
 def generate_sample(_n_filt=N_FILT, _winlen=WINLEN, _winstep=WINLEN//2,
- _generator=randomizer.get_noisy_speech, _winfunc=lambda x: np.ones((x,))):
+ _generator=randomizer.get_noisy_speech, to_write=False, _winfunc=lambda x: np.ones((x,))):
 	bg_batch, hm_batch = _generator()
 	return hm_batch, bg_batch, compute_feature(bg_batch, hm_batch, _n_filt=_n_filt,
-	 _winstep=_winstep, _winlen=_winlen, _winfunc=_winfunc)
+	 _winstep=_winstep, _winlen=_winlen, to_write=to_write, _winfunc=_winfunc)

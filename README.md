@@ -1,8 +1,13 @@
-# Refactoring #
+# Note #
+This repository is intended as a reference for ideal ratio mask dnn implementation
+
+It is based on my university dissertation. Please send me an email if you would like to know more about it.
 
 # Python Version #
 Python 2.6+ / Python 3.5+
-To run any scripts from the test/full_system_evaluation, Python 2.6+ must be required
+
+To run any test script, Python 2.6+ must be required
+
 # Installing dependencies #
 run the following command from the project root directory
 ``` pip install -r requirements.txt ```
@@ -16,8 +21,6 @@ Download LibriSpeech dataset from http://www.openslr.org/12/ and place the uncom
 
 Download the DEMAND dataset from https://datashare.is.ed.ac.uk/handle/10283/2791 and place the uncompressed files to the appropriate directory
 
-If a full dataset is used, search for TODO in the project folder and replace the parameter values accordingly
-
 # Generating Training Dataset #
 ```
 cd preprocessing
@@ -25,13 +28,11 @@ python generate_dataset.py
 ```
 # Train a Neural Network (Example) #
 ```
-cd train/mfcc_sequence
-python topology_train.py
+cd train
+python residual_train.py
 ```
 # Test a Neural Network (Example) #
 ```
 cd test
-python vanilla_net_test.py
+python test_snr_performance.py
 ```
-# Analyze the Training Result #
-run any python script from the analyze/plot directory
