@@ -6,8 +6,9 @@ CONF_PATH = os.path.join(os.path.dirname(__file__), '../config.json')
 DATASET_PATH = os.path.join(os.path.dirname(__file__), '../out')
 
 with open(CONF_PATH) as f:
-	BATCH_SIZE = json.load(f)["train"]["batch_size"]
-	SINGLE_BATCH_STEP = json.load(f)["train"]["single_batch_step"]
+	CONF = json.load(f)
+	BATCH_SIZE = CONF["train"]["batch_size"]
+	SINGLE_BATCH_STEP = CONF["train"]["single_batch_step"]
 
 def unison_shuffled_copies(a, b):
 	assert len(a) == len(b)

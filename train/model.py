@@ -6,8 +6,9 @@ import keras.backend as K
 from keras import optimizers
 
 with open(os.path.join(os.path.dirname(__file__), '../config.json')) as f:
-	INPUT_SIZE = json.load(f)["train"]["input_size"]
-	FRAME_SIZE = json.load(f)["train"]["frame_size"]
+	CONF = json.load(f)
+	INPUT_SIZE = CONF["train"]["input_size"]
+	FRAME_SIZE = CONF["train"]["frame_size"]
 
 def set_frame_size(size):
 	global FRAME_SIZE
