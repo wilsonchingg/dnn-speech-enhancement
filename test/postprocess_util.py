@@ -7,11 +7,11 @@ def get_pesq(s_1, s_2):
 	args = ['pesq', '+16000', os.path.join(OUTPUT_PATH, s_1), os.path.join(OUTPUT_PATH, s_2)]
 	pipe = subprocess.Popen(args, stdout=subprocess.PIPE)
 	out, _ = pipe.communicate()
-	return str(out).split('\n')[-2]
+	return str(out).split('\\n')[-2] #TODO: change from \\n to \n in Python 2
 
 def get_mso_lqo(s_1, s_2):
 	result = get_pesq(s_1, s_2)
-	num = result.split('\t')[-1].strip()
+	num = result.split('\\t')[-1].strip() #TODO: change from \\n to \n in Python 2
 	return float(num)
 
 def mso_lqo_mfcc_test(true_source, ideal_source, mixed_source, *sources):

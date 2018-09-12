@@ -4,9 +4,7 @@ This repository is intended as a reference for ideal ratio mask dnn implementati
 It is based on my university dissertation. Please send me an email if you would like to know more about it.
 
 # Python Version #
-Python 2.6+ / Python 3.5+
-
-To run any test script, Python 2.6+ must be required
+Python 3 (Python 2 also works with some modifications, search TODO in the repository)
 
 # Installing dependencies #
 run the following command from the project root directory

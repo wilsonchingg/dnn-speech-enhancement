@@ -1,5 +1,5 @@
 import os, sys, json, numpy as np
-from logmmse import run_logmmse
+from logmmse import logmmse_from_file
 from predict import predict
 sys.path.append(os.path.join(os.path.dirname(__file__), "../preprocessing"))
 sys.path.append(os.path.join(os.path.dirname(__file__), "../train"))
@@ -27,7 +27,7 @@ for j in multipliers:
 	for i in range(0, EPOCHS):
 		hm, bg, mfcc_feature = generate_sample(_n_filt=NFILT, _winlen=WINLEN, _winstep=WINSTEP,
          _winfunc=np.hamming, _generator=get_audio, to_write=True)
-		run_logmmse(os.path.join(os.path.dirname(__file__), '../sample_test/mixed.wav'),
+		logmmse_from_file(os.path.join(os.path.dirname(__file__), '../sample_test/mixed.wav'),
         os.path.join(os.path.dirname(__file__), '../sample_test/logmmse.wav'))
 		sequence_feature = np.array(to_sequence_with_stride(mfcc_feature,
          left_pad=PAD_L, right_pad=PAD_R))
